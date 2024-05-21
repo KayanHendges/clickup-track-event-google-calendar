@@ -1,0 +1,26 @@
+version: "3.4"
+services:
+ timetracker:
+    env_file: .env
+    container_name: timetracker
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+    restart: on-failure
+    ports:
+      - 8888:8888
+    expose:
+      - 8888
+    working_dir: /app
+    entrypoint: ["yarn", "dev", "--host"]
+    networks: 
+      - default
+networks:
+  default:
+    name: web
+    external: true
